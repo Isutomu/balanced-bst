@@ -20,7 +20,7 @@ function buildTree(arr, start = 0, end = arr.length - 1) {
   return root;
 }
 
-class Tree {
+export default class Tree {
   _root;
   constructor(arr) {
     this._root = buildTree(sort(arr, true));
