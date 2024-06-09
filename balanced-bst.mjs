@@ -25,4 +25,16 @@ export default class Tree {
   constructor(arr) {
     this._root = buildTree(sort(arr, true));
   }
+
+  insert(value, node = this._root) {
+    if (node.data === value) return;
+
+    if (value > node.data && !node.right) {
+      node.right = new Node(value);
+    } else if (value < node.data && !node.left) {
+      node.left = new Node(value);
+    } else {
+      this.insert(value, value > node.data ? node.right : node.left);
+    }
+  }
 }
