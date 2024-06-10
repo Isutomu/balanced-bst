@@ -27,14 +27,14 @@ export default class Tree {
   }
 
   insert(value, node = this._root) {
-    if (node.data === value) return;
+    if (node === null) return new Node(value);
 
-    if (value > node.data && !node.right) {
-      node.right = new Node(value);
-    } else if (value < node.data && !node.left) {
-      node.left = new Node(value);
-    } else {
-      this.insert(value, value > node.data ? node.right : node.left);
+    if (value > node.data) {
+      node.right = this.insert(value, node.right);
+    } else if (value < node.data) {
+      node.left = this.insert(value, node.left);
     }
+
+    return node;
   }
 }
