@@ -37,4 +37,34 @@ export default class Tree {
 
     return node;
   }
+
+  deleteItem(value, node = this._root) {
+    if (node === null) return null;
+
+    if (value === node.data) {
+      if (!!node.right && !!node.left) {
+        node.data = this.minValue(node.right);
+        node.right = this.deleteItem(node.data, node.right);
+      } else {
+        node = node.right ? node.right : node.left;
+      }
+    } else {
+      if (value > node.data) {
+        node.right = this.deleteItem(value, node.right);
+      } else if (value < node.data) {
+        node.left = this.deleteItem(value, node.left);
+      }
+    }
+
+    return node;
+  }
+
+  minValue(node = this._root) {
+    let searchNode = node;
+    while (searchNode.left !== null) {
+      searchNode = searchNode.left;
+    }
+
+    return searchNode.data;
+  }
 }
