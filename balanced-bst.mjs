@@ -76,14 +76,13 @@ export default class Tree {
     let queue = [this._root];
     let valuesArr = [];
 
-    while (!queue.length) {
+    while (!!queue.length) {
       if (queue[0].left !== null) {
         queue.push(queue[0].left);
       }
       if (queue[0].right !== null) {
         queue.push(queue[0].right);
       }
-
       if (callback === null) {
         valuesArr.push(queue.shift().data);
       } else {
