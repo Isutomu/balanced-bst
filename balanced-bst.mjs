@@ -94,7 +94,7 @@ export default class Tree {
   }
 
   inOrder(callback = null, node = this._root) {
-    if (!node.left && node.right) return node.value;
+    if (!node.left && !node.right) return [node.data];
 
     const valueLeft = [];
     const valueRight = [];
@@ -109,29 +109,45 @@ export default class Tree {
       valueRight.push(...this.inOrder(callback, node.right));
     }
 
-    return [...valueLeft, ...valueRight];
+    return [...valueLeft, node.data, ...valueRight];
   }
 
   preOrder(callback = null, node = this._root) {
-    if (callback === null) {
-      node.data;
-    } else {
+    if (!node.left && !node.right) return [node.data];
+
+    const valueLeft = [];
+    const valueRight = [];
+
+    if (callback !== null) {
       callback(node);
     }
+    if (node.left !== null) {
+      valueLeft.push(...this.preOrder(callback, node.left));
+    }
+    if (node.right !== null) {
+      valueRight.push(...this.preOrder(callback, node.right));
+    }
 
-    if (node.left !== null) this.inOrder(callback, node.left);
-    if (node.right !== null) this.inOrder(callback, node.right);
+    return [node.data, ...valueLeft, ...valueRight];
   }
 
   postOrder(callback = null, node = this._root) {
-    if (node.left !== null) this.inOrder(callback, node.left);
-    if (node.right !== null) this.inOrder(callback, node.right);
+    if (!node.left && !node.right) return [node.data];
 
-    if (callback === null) {
-      node.data;
-    } else {
+    const valueLeft = [];
+    const valueRight = [];
+
+    if (node.left !== null) {
+      valueLeft.push(...this.postOrder(callback, node.left));
+    }
+    if (node.right !== null) {
+      valueRight.push(...this.postOrder(callback, node.right));
+    }
+    if (callback !== null) {
       callback(node);
     }
+
+    return [...valueLeft, ...valueRight, node.data];
   }
 
   minValue(node = this._root) {
