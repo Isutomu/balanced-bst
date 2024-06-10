@@ -72,6 +72,28 @@ export default class Tree {
     return searchNode;
   }
 
+  levelOrder(callback = null) {
+    let queue = [this._root];
+    let valuesArr = [];
+
+    while (!queue.length) {
+      if (queue[0].left !== null) {
+        queue.push(queue[0].left);
+      }
+      if (queue[0].right !== null) {
+        queue.push(queue[0].right);
+      }
+
+      if (callback === null) {
+        valuesArr.push(queue.shift().data);
+      } else {
+        callback(queue.shift());
+      }
+    }
+
+    return callback === null ? valuesArr : true;
+  }
+
   minValue(node = this._root) {
     let searchNode = node;
     while (searchNode.left !== null) {
