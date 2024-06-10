@@ -59,6 +59,19 @@ export default class Tree {
     return node;
   }
 
+  find(value) {
+    let searchNode = this._root;
+
+    while (searchNode !== null) {
+      if (searchNode.data === value) {
+        break;
+      }
+      searchNode = value > searchNode.data ? searchNode.right : searchNode.left;
+    }
+
+    return searchNode;
+  }
+
   minValue(node = this._root) {
     let searchNode = node;
     while (searchNode.left !== null) {
