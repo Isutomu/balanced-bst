@@ -93,6 +93,47 @@ export default class Tree {
     return callback === null ? valuesArr : true;
   }
 
+  inOrder(callback = null, node = this._root) {
+    if (!node.left && node.right) return node.value;
+
+    const valueLeft = [];
+    const valueRight = [];
+
+    if (node.left !== null) {
+      valueLeft.push(...this.inOrder(callback, node.left));
+    }
+    if (callback !== null) {
+      callback(node);
+    }
+    if (node.right !== null) {
+      valueRight.push(...this.inOrder(callback, node.right));
+    }
+
+    return [...valueLeft, ...valueRight];
+  }
+
+  preOrder(callback = null, node = this._root) {
+    if (callback === null) {
+      node.data;
+    } else {
+      callback(node);
+    }
+
+    if (node.left !== null) this.inOrder(callback, node.left);
+    if (node.right !== null) this.inOrder(callback, node.right);
+  }
+
+  postOrder(callback = null, node = this._root) {
+    if (node.left !== null) this.inOrder(callback, node.left);
+    if (node.right !== null) this.inOrder(callback, node.right);
+
+    if (callback === null) {
+      node.data;
+    } else {
+      callback(node);
+    }
+  }
+
   minValue(node = this._root) {
     let searchNode = node;
     while (searchNode.left !== null) {
