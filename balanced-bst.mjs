@@ -150,6 +150,15 @@ export default class Tree {
     return [...valueLeft, ...valueRight, node.data];
   }
 
+  height(node = this._root) {
+    if (!node.right && !node.left) return 1;
+
+    const leftDepth = 1 + (!node.left ? 0 : this.height(node.left));
+    const rightDepth = 1 + (!node.right ? 0 : this.height(node.right));
+
+    return leftDepth > rightDepth ? leftDepth : rightDepth;
+  }
+
   minValue(node = this._root) {
     let searchNode = node;
     while (searchNode.left !== null) {
