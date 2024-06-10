@@ -159,6 +159,21 @@ export default class Tree {
     return leftDepth > rightDepth ? leftDepth : rightDepth;
   }
 
+  depth(node) {
+    let depthValue = 1;
+    let searchNode = this._root;
+
+    while (true) {
+      if (searchNode === node) {
+        return depthValue;
+      }
+
+      depthValue += 1;
+      searchNode =
+        node.data > searchNode.data ? searchNode.right : searchNode.left;
+    }
+  }
+
   minValue(node = this._root) {
     let searchNode = node;
     while (searchNode.left !== null) {
