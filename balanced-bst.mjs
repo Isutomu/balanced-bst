@@ -189,6 +189,11 @@ export default class Tree {
     }
   }
 
+  rebalance() {
+    const arr = this.inOrder();
+    this._root = this.buildTree(arr);
+  }
+
   minValue(node = this._root) {
     let searchNode = node;
     while (searchNode.left !== null) {
