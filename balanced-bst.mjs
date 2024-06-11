@@ -174,6 +174,21 @@ export default class Tree {
     }
   }
 
+  isBalanced(node = this._root) {
+    if (!node || (!node.right && !node.left)) return true;
+
+    const depthLeft = !node.left ? this.height(node) : this.height(node.left);
+    const depthRight = !node.right
+      ? this.height(node)
+      : this.height(node.right);
+
+    if (Math.abs(depthLeft - depthRight) > 1) {
+      return false;
+    } else {
+      return this.isBalanced(node.right) && this.isBalanced(node.left);
+    }
+  }
+
   minValue(node = this._root) {
     let searchNode = node;
     while (searchNode.left !== null) {
